@@ -1189,3 +1189,238 @@ button, .option-card, .link-btn {
 .ig-gradient-icon {
   transform: translateY(3px);
 }
+
+
+/* =========================================================
+   1004_v1｜虹彩玻璃擬態視覺改造
+   ========================================================= */
+
+:root {
+  --bg: #fbfbf8;
+  --card: rgba(255, 255, 255, 0.62);
+  --ink: #252525;
+  --muted: #6f7370;
+  --accent: #ccec86;
+  --accent-deep: #7f9f45;
+  --accent-soft: rgba(204, 236, 134, 0.20);
+  --glass: rgba(255, 255, 255, 0.58);
+  --glass-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.76);
+  --glass-border-soft: rgba(218, 221, 215, 0.72);
+  --line: rgba(210, 212, 206, 0.72);
+  --track: rgba(223, 228, 223, 0.78);
+  --shadow: 0 10px 30px rgba(76, 86, 84, 0.08);
+  --shadow-soft: 0 6px 22px rgba(76, 86, 84, 0.06);
+  --radius: 22px;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 8%, rgba(190, 224, 255, 0.20), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(226, 205, 255, 0.18), transparent 30%),
+    radial-gradient(circle at 72% 78%, rgba(204, 236, 134, 0.15), transparent 32%),
+    radial-gradient(circle at 14% 86%, rgba(255, 214, 230, 0.14), transparent 30%),
+    var(--bg);
+  color: var(--ink);
+}
+
+.teaser-card,
+.tendency-card,
+.reminder-card,
+.links-card,
+.closing-card,
+.option-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border-soft);
+  box-shadow: var(--shadow-soft);
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
+  backdrop-filter: blur(14px) saturate(118%);
+}
+
+.teaser-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.50)),
+    radial-gradient(circle at 12% 10%, rgba(194, 226, 255, .28), transparent 34%),
+    radial-gradient(circle at 88% 20%, rgba(230, 208, 255, .26), transparent 34%),
+    radial-gradient(circle at 72% 90%, rgba(204, 236, 134, .20), transparent 30%);
+  border: 1px solid rgba(255,255,255,.86);
+  box-shadow: 0 10px 26px rgba(78, 89, 86, .07);
+}
+
+.teaser-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg,
+      rgba(255,255,255,0) 18%,
+      rgba(255,255,255,.34) 38%,
+      rgba(255,255,255,0) 58%);
+  opacity: .55;
+}
+
+.hero-title,
+.result-title,
+.question-title {
+  color: var(--ink);
+}
+
+.eyebrow {
+  color: var(--accent-deep);
+}
+
+.primary-btn {
+  background: #8eaa53;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(127, 159, 69, .20);
+}
+
+.primary-btn:hover {
+  background: #7f9f45;
+}
+
+.secondary-btn {
+  color: #6f873f;
+  background: rgba(255,255,255,.72);
+  border-color: rgba(127,159,69,.55);
+}
+
+.progress-track {
+  background: rgba(225, 230, 225, .86);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #b8df6f, #8eaa53);
+}
+
+.option-card {
+  background: rgba(255,255,255,.66);
+  border-color: rgba(214, 217, 211, .82);
+  box-shadow: 0 5px 18px rgba(80, 92, 88, .05);
+}
+
+.option-card:hover {
+  border-color: rgba(154, 182, 96, .58);
+  background: rgba(255,255,255,.78);
+}
+
+.option-card.selected {
+  border-color: rgba(142, 170, 83, .78);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.78), rgba(238, 247, 215, .66));
+  box-shadow: 0 7px 20px rgba(142,170,83,.10);
+}
+
+.tendency-card {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.76), rgba(255,255,255,.54));
+  border-color: rgba(255,255,255,.90);
+  box-shadow: 0 10px 28px rgba(80,90,88,.07);
+}
+
+.tendency-track {
+  background: rgba(224, 230, 225, .82);
+}
+
+.tendency-fill {
+  background: rgba(155, 177, 166, .72);
+}
+
+.tendency-row.is-result .tendency-fill {
+  background: linear-gradient(90deg, #b9df72, #8eaa53);
+}
+
+.tendency-row.is-result .tendency-name,
+.tendency-row.is-result .tendency-value {
+  color: #6f873f;
+}
+
+.keyword-chip {
+  background: rgba(255,255,255,.76);
+  border-color: rgba(214,217,211,.76);
+  box-shadow: 0 3px 10px rgba(80,90,88,.04);
+}
+
+.reminder-card {
+  background: rgba(255,255,255,.72);
+  border-color: rgba(255,255,255,.90);
+  box-shadow: 0 8px 24px rgba(80,90,88,.06);
+}
+
+.reminder-card strong {
+  color: #6f873f;
+}
+
+.links-card {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.76), rgba(255,255,255,.56));
+  border-color: rgba(255,255,255,.90);
+  box-shadow: 0 10px 28px rgba(80,90,88,.07);
+}
+
+.info-list {
+  background: rgba(255,255,255,.44);
+  border-color: rgba(214,217,211,.68);
+}
+
+.info-row {
+  background: rgba(255,255,255,.30);
+}
+
+.info-row:hover {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.60), rgba(238,247,215,.38));
+}
+
+.info-row-active {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.54), rgba(238,247,215,.34));
+}
+
+.info-arrow,
+.info-row-active strong {
+  color: #718b40;
+}
+
+.ig-gradient-icon {
+  transform: translateY(3px);
+}
+
+.closing-card {
+  background: rgba(255,255,255,.52);
+  border-color: rgba(255,255,255,.82);
+  box-shadow: 0 6px 20px rgba(80,90,88,.05);
+}
+
+.result-description,
+.section-subtitle,
+.result-disclaimer,
+.mini-disclaimer,
+.home-copy,
+.home-copy-card,
+.tendency-note {
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .teaser-card,
+  .tendency-card,
+  .reminder-card,
+  .links-card,
+  .closing-card,
+  .option-card {
+    -webkit-backdrop-filter: blur(10px) saturate(112%);
+    backdrop-filter: blur(10px) saturate(112%);
+  }
+
+  .teaser-card {
+    box-shadow: 0 8px 22px rgba(78, 89, 86, .06);
+  }
+
+  .option-card {
+    box-shadow: 0 4px 14px rgba(80, 92, 88, .04);
+  }
+}
