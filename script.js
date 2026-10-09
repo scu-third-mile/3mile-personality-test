@@ -1,6 +1,7 @@
 const ROLE_INFO = {
   explore: {
     emoji: "📸",
+    icon: "assets/role-explore.png",
     name: "沿途探索家",
     max: 11,
     quote: "「都來了，當然要看看這一路會遇到什麼！」",
@@ -10,6 +11,7 @@ const ROLE_INFO = {
   },
   challenge: {
     emoji: "🔥",
+    icon: "assets/role-challenge.png",
     name: "熱血挑戰者",
     max: 9,
     quote: "「越難，我越想證明自己做得到。要拼 🔥」",
@@ -19,6 +21,7 @@ const ROLE_INFO = {
   },
   team: {
     emoji: "🤝",
+    icon: "assets/role-team.png",
     name: "夥伴黏著劑",
     max: 9,
     quote: "「去哪裡很重要，但跟誰一起走更重要。」",
@@ -28,6 +31,7 @@ const ROLE_INFO = {
   },
   steady: {
     emoji: "🛡️",
+    icon: "assets/role-steady.png",
     name: "穩定節奏型",
     max: 11,
     quote: "「不是騎最快，是知道怎麼一路騎到底。」",
@@ -626,7 +630,7 @@ function renderResult(scores, finalRoles) {
     const role = finalRoles[0];
     const info = ROLE_INFO[role];
 
-    resultEmoji.textContent = info.emoji;
+    resultEmoji.innerHTML = `<img class="result-role-rover" src="${info.icon}" alt="${info.name} Rover">`;
     resultTitle.textContent = info.name;
     resultQuote.textContent = info.quote;
     resultDescription.textContent = info.description;
@@ -641,7 +645,7 @@ function renderResult(scores, finalRoles) {
     const dual = DUAL_INFO[key];
 
     if (dual) {
-      resultEmoji.textContent = dual.emoji;
+      resultEmoji.innerHTML = finalRoles.map((role) => `<img class="result-role-rover dual-role-rover" src="${ROLE_INFO[role].icon}" alt="${ROLE_INFO[role].name} Rover">`).join("");
       resultTitle.textContent = dual.title;
       resultQuote.textContent = "";
       resultDescription.textContent = dual.description;
@@ -653,7 +657,7 @@ function renderResult(scores, finalRoles) {
       keywords = dual.keywords;
     } else {
       // 理論上目前配分只會留下兩組雙重角色；保留 fallback 以防未來改題目。
-      resultEmoji.textContent = finalRoles.map((role) => ROLE_INFO[role].emoji).join("");
+      resultEmoji.innerHTML = finalRoles.map((role) => `<img class="result-role-rover dual-role-rover" src="${ROLE_INFO[role].icon}" alt="${ROLE_INFO[role].name} Rover">`).join("");
       resultTitle.textContent = finalRoles.map((role) => ROLE_INFO[role].name).join(" × ");
       resultQuote.textContent = "";
       resultDescription.textContent = "你的作答同時展現了兩種很接近的環島傾向。";
@@ -677,7 +681,7 @@ function renderResult(scores, finalRoles) {
 
       return `
         <div class="tendency-row ${isResult ? "is-result" : ""}">
-          <div class="tendency-name">${info.emoji} ${info.name}</div>
+          <div class="tendency-name"><img class="tendency-rover-icon" src="${info.icon}" alt=""> <span>${info.name}</span></div>
           <div class="tendency-track">
             <div class="tendency-fill" style="width: ${percent}%"></div>
           </div>

@@ -2124,3 +2124,272 @@ body::before {
     padding-right: 62px;
   }
 }
+
+
+/* =========================================================
+   1009_v2｜首頁縮短 / 結果文字整理 / Rover 角色化
+   ========================================================= */
+
+/* 1. 首頁縮短：保留 Rover 合輯，但讓開始按鈕更容易出現在首屏 */
+@media (max-width: 640px) {
+  .home-card {
+    min-height: auto;
+    justify-content: flex-start;
+    padding: 18px 8px 22px;
+  }
+
+  .home-card > .eyebrow {
+    margin-bottom: 12px;
+    padding: 6px 11px;
+    font-size: clamp(.78rem, 3.35vw, .92rem);
+    letter-spacing: .035em;
+    white-space: nowrap;
+  }
+
+  .hero-title {
+    font-size: clamp(1.88rem, 7.25vw, 2.45rem);
+    line-height: 1.12;
+    letter-spacing: -.035em;
+  }
+
+  .hero-subtitle {
+    margin: 10px 0 10px;
+    font-size: clamp(.98rem, 3.55vw, 1.08rem);
+    line-height: 1.55;
+  }
+
+  .rover-lineup-wrap {
+    width: min(90%, 390px);
+    height: 92px;
+    margin: 0 auto 8px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rover-lineup {
+    width: 100%;
+    max-height: 92px;
+    object-fit: contain;
+  }
+
+  .home-copy {
+    font-size: .96rem;
+    line-height: 1.65;
+  }
+
+  .home-copy p {
+    margin-bottom: 5px;
+  }
+
+  .teaser-card {
+    margin-top: 9px;
+    padding: 12px 15px;
+  }
+
+  .teaser-card p {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .meta-line {
+    margin: 11px 0 8px;
+    font-size: .94rem;
+  }
+
+  .home-card .primary-btn {
+    min-height: 50px;
+  }
+
+  .home-card .tagline {
+    margin-top: 11px;
+  }
+
+  .mini-disclaimer {
+    margin-top: 5px;
+  }
+}
+
+/* 更窄手機仍維持頂部標籤單行 */
+@media (max-width: 390px) {
+  .home-card > .eyebrow {
+    font-size: .75rem;
+    padding-inline: 9px;
+  }
+
+  .hero-title {
+    font-size: 1.82rem;
+  }
+
+  .rover-lineup-wrap {
+    height: 84px;
+  }
+
+  .rover-lineup {
+    max-height: 84px;
+  }
+}
+
+/* 2. 結果頁：角色代表話不要出現尷尬的單字斷行 */
+.result-quote {
+  max-width: none;
+  padding: 0 6px;
+  font-size: clamp(1rem, 3.9vw, 1.18rem);
+  line-height: 1.58;
+  text-wrap: balance;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.result-description {
+  max-width: 660px;
+  font-size: clamp(.96rem, 3.8vw, 1.03rem);
+  line-height: 1.82;
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .result-intro {
+    padding: 24px 18px 22px;
+  }
+
+  .result-intro .eyebrow {
+    padding-right: 0;
+  }
+
+  .result-title {
+    font-size: clamp(2rem, 8.2vw, 2.55rem);
+  }
+
+  .result-quote {
+    margin: 10px auto 15px;
+    font-size: clamp(.96rem, 4.05vw, 1.08rem);
+    line-height: 1.62;
+  }
+
+  .result-description {
+    line-height: 1.78;
+  }
+}
+
+/* 3. 主結果不再放右上角 Rover；Rover 移到小提醒右上角 */
+.result-rover-wrap {
+  display: none !important;
+}
+
+.reminder-card {
+  position: relative;
+  overflow: hidden;
+  padding-right: 88px;
+}
+
+.reminder-rover {
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(64,61,90,.10));
+}
+
+@media (max-width: 390px) {
+  .reminder-card {
+    padding-right: 76px;
+  }
+
+  .reminder-rover {
+    width: 54px;
+    height: 54px;
+    right: 10px;
+    top: 11px;
+  }
+}
+
+/* 4. 結果頁下方玻璃卡取消灰色外框，用陰影與白色玻璃層次區隔 */
+.tendency-card,
+.reminder-card,
+.links-card,
+.closing-card {
+  border: none !important;
+}
+
+.links-card {
+  border-top: none !important;
+}
+
+.info-list {
+  border: none !important;
+}
+
+.info-row + .info-row {
+  border-top-color: rgba(184,66,53,.10);
+}
+
+/* 5. Rover 取代四角色 emoji */
+.result-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 96px;
+  margin: 6px auto 2px;
+}
+
+.result-role-rover {
+  display: block;
+  width: auto;
+  height: 96px;
+  max-width: 165px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 13px rgba(0,0,0,.12));
+}
+
+.result-role-rover.dual-role-rover {
+  height: 82px;
+  max-width: 145px;
+}
+
+.tendency-name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.tendency-rover-icon {
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+  flex: 0 0 29px;
+  filter: drop-shadow(0 2px 3px rgba(64,61,90,.08));
+}
+
+.tendency-name span {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .result-emoji {
+    min-height: 82px;
+    margin-top: 3px;
+  }
+
+  .result-role-rover {
+    height: 82px;
+    max-width: 145px;
+  }
+
+  .result-role-rover.dual-role-rover {
+    height: 70px;
+    max-width: 120px;
+  }
+
+  .tendency-rover-icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+}
