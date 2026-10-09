@@ -337,7 +337,7 @@ let answers = {};
 let otherText = "";
 
 function showPage(pageEl) {
-  [homePage, quizPage, resultPage].forEach((page) => page.classList.remove("active-page"));
+  [homePage, quizPage, resultPage, document.getElementById("imagePreviewPage")].forEach((page) => page.classList.remove("active-page"));
   pageEl.classList.add("active-page");
   window.scrollTo({ top: 0, behavior: "instant" });
 }
@@ -614,6 +614,7 @@ function normalizeDisplayPercents(scores) {
 
 function renderResult(scores, finalRoles) {
   const displayPercents = normalizeDisplayPercents(scores);
+  currentResult = { scores: { ...scores }, roles: [...finalRoles] };
 
   const resultEmoji = document.getElementById("resultEmoji");
   const resultTitle = document.getElementById("resultTitle");
@@ -624,6 +625,7 @@ function renderResult(scores, finalRoles) {
   const keywordList = document.getElementById("keywordList");
   const tendencyList = document.getElementById("tendencyList");
 
+  resultTitle.classList.toggle("is-dual-title", finalRoles.length > 1);
   let keywords = [];
 
   if (finalRoles.length === 1) {
@@ -659,9 +661,12 @@ function renderResult(scores, finalRoles) {
 
     if (dual) {
       resultEmoji.innerHTML = finalRoles.map((role) => `<img class="result-role-rover dual-role-rover" src="${ROLE_INFO[role].icon}" alt="${ROLE_INFO[role].name} Rover">`).join("");
-      resultTitle.textContent = dual.title;
+      resultTitle.innerHTML = finalRoles.map(role => `<span>${escapeHtml(ROLE_INFO[role].name)}</span>`).join('<span class="dual-title-cross"> × </span>');
       resultQuote.textContent = "";
-      resultDescription.textContent = dual.description;
+      const paragraphs = key === "challenge|team"
+        ? dual.description.split(/(?=遇到困難時)/)
+        : ["你會期待一路上的風景、新體驗和不同發現。", "同時也懂得掌握自己的狀態、穩穩完成旅程。"];
+      resultDescription.innerHTML = paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join("");
 
       dualBadge.classList.remove("hidden");
       resultTagline.classList.remove("hidden");
@@ -719,3 +724,94 @@ nextBtn.addEventListener("click", goNext);
 backBtn.addEventListener("click", goBack);
 retryBtn.addEventListener("click", restartQuiz);
 homeBtn.addEventListener("click", goHome);
+
+// A dedicated 1080 × 1350 card, independent of the webpage's responsive layout.
+let currentResult = null;
+let resultImageCache = null;
+const CARD_FONT = '"PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif';
+const CARD_CROPS = { explore: [40, 0, 334, 498], challenge: [0, 0, 473, 518], team: [23, 0, 540, 400], steady: [50, 0, 438, 519] };
+function loadCardImage(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('圖片載入失敗'));
+    image.src = src;
+  });
+}
+function paintResultCard(ctx, images, result) {
+  const roles = ['explore', 'challenge', 'team', 'steady'];
+  const percents = normalizeDisplayPercents(result.scores);
+  const dual = result.roles.length > 1;
+  const dualInfo = DUAL_INFO[result.roles.slice().sort().join('|')];
+  const rounded = (x,y,w,h,r,fill) => {
+    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); ctx.fillStyle=fill; ctx.fill();
+  };
+  const text = (value,x,y,size,color,bold=true,maxWidth=950,align='center') => {
+    ctx.textAlign=align; ctx.fillStyle=color;
+    while(size>18) { ctx.font=`${bold ? 800 : 500} ${size}px ${CARD_FONT}`; if(ctx.measureText(value).width<=maxWidth)break; size--; }
+    ctx.fillText(value,x,y);
+  };
+  const rover = (role,x,y,w,h) => {
+    const [sx,sy,sw,sh]=CARD_CROPS[role];
+    const scale=Math.min(w/sw,h/sh),dw=sw*scale,dh=sh*scale;
+    ctx.drawImage(images[role],sx,sy,sw,sh,x+(w-dw)/2,y+(h-dh)/2,dw,dh);
+  };
+  const background=ctx.createLinearGradient(0,0,1080,1350);
+  background.addColorStop(0,'#eae6f2'); background.addColorStop(1,'#f5f0ed');
+  ctx.fillStyle=background;ctx.fillRect(0,0,1080,1350);
+  text('東吳第3哩｜單車環島活動',540,69,30,'#69627f');
+  text('你會是哪一型環島隊友？',540,132,49,'#403c57');
+  const purple=ctx.createLinearGradient(55,190,1025,745);
+  purple.addColorStop(0,'#625c79');purple.addColorStop(1,'#403d59');
+  rounded(55,175,970,565,48,purple);
+  text('✦  ·  ✧  ·  ✦',172,218,24,'#a69bb6',false,240);
+  text('你的環島角色是',540,248,34,'#efc7c1');
+  if(dual) {
+    result.roles.forEach((role,i)=>rover(role,290+i*265,280,240,205));
+  } else rover(result.roles[0],385,278,310,235);
+  const title=result.roles.map(role=>ROLE_INFO[role].name).join(' × ');
+  text(title,540,570,dual?57:78,'#fffdf8',true,880);
+  const quote=dual?(dualInfo?.tagline || '一起展現你的環島角色') : ROLE_INFO[result.roles[0]].quote;
+  text(quote,540,642,37,'#fffdf8',true,875);
+  if(dual)text('解鎖少見的雙重角色',540,698,25,'#efc7c1',false);
+  rounded(55,775,970,450,42,'#faf8fc');
+  text('你的四種環島角色傾向',540,839,42,'#403c57');
+  roles.forEach((role,i)=>{
+    const y=910+i*78,isMain=result.roles.includes(role),color=isMain?'#b84235':'#807b88';
+    rover(role,88,y-43,65,62);
+    text(ROLE_INFO[role].name,174,y,32,color,true,260,'left');
+    rounded(440,y-23,405,17,9,'#e6e1ed');
+    if(percents[role]>0)rounded(440,y-23,405*percents[role]/100,17,Math.min(8,405*percents[role]/200),isMain?'#b84235':'#aaa2b8');
+    text(`${percents[role]}%`,951,y,36,color,true,100,'right');
+  });
+  text('依照這次作答呈現出的特質傾向',540,1190,24,'#898294',false);
+  text('東吳第3哩，挑戰在一起',540,1298,39,'#4f4c6b');
+}
+async function createResultPng(result) {
+  if(document.fonts?.ready)await document.fonts.ready;
+  const entries=await Promise.all(Object.keys(ROLE_INFO).map(async role=>[role,await loadCardImage(`assets/role-${role}.png`)]));
+  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;
+  const ctx=canvas.getContext('2d');if(!ctx)throw new Error('無法產生圖片');
+  paintResultCard(ctx,Object.fromEntries(entries),result);
+  return canvas.toDataURL('image/png');
+}
+document.getElementById('saveResultBtn').addEventListener('click',async()=>{
+  if(!currentResult)return;
+  const button=document.getElementById('saveResultBtn');
+  const image=document.getElementById('resultPreviewImage');
+  const status=document.getElementById('imagePreviewStatus');
+  const result=currentResult,key=JSON.stringify(result);
+  button.disabled=true;button.textContent='圖片製作中…';
+  try {
+    const src=resultImageCache?.key===key?resultImageCache.src:await createResultPng(result);
+    resultImageCache={key,src}; image.src=src;
+    status.textContent='長按圖片或截圖保存';
+    showPage(document.getElementById('imagePreviewPage'));
+  } catch(error) {
+    status.textContent='圖片暫時無法產生，請返回結果後重試。';
+    image.removeAttribute('src');
+    showPage(document.getElementById('imagePreviewPage'));
+  } finally {button.disabled=false;button.textContent='保存結果圖片';}
+});
+document.getElementById('previewBackBtn').addEventListener('click',()=>showPage(resultPage));

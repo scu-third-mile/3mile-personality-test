@@ -144,12 +144,7 @@
         </section>
 
         <section class="closing-card">
-          <p>
-            現在還沒準備好也沒關係<br>
-            環島本來就不是一天練成的<br>
-            一起從認證日與飛輪訓練開始準備<br>
-            把「我可以嗎？」慢慢騎成「我們出發吧！」
-          </p>
+          <p>現在還沒準備好也沒關係<br>環島本來就不是一天練成的<br>一起從認證日與飛輪訓練開始準備<br>把「我可以嗎？」慢慢騎成「我們出發吧！」</p>
         </section>
 
         <p class="result-disclaimer">
@@ -157,12 +152,20 @@
         </p>
 
         <div class="result-actions">
+          <button id="saveResultBtn" class="primary-btn">保存結果圖片</button>
           <button id="retryBtn" class="primary-btn">再測一次</button>
           <button id="homeBtn" class="secondary-btn">回到首頁</button>
         </div>
       </div>
     </section>
 
+    <section id="imagePreviewPage" class="page image-preview-page" aria-label="結果圖片預覽">
+      <div class="image-preview-wrap">
+        <img id="resultPreviewImage" class="result-preview-image" alt="你的環島角色結果圖" />
+        <p id="imagePreviewStatus" class="image-preview-hint" role="status">長按圖片或截圖保存</p>
+        <button id="previewBackBtn" class="secondary-btn">返回結果</button>
+      </div>
+    </section>
   </main>
 
   <script src="script.js"></script>
