@@ -831,8 +831,9 @@ function paintResultCard(ctx, images, result) {
   const tendencyTop=cardBottom+40;
   const tendencyBottom=1620;
   rounded(55,tendencyTop,970,tendencyBottom-tendencyTop,42,'#faf8fc');
-  text('你的四種環島角色傾向',540,tendencyTop+66,42,'#403c57');
-  const rowStart=tendencyTop+137;
+  text('你的四種環島角色傾向',540,tendencyTop+62,42,'#403c57');
+  text('依照這次作答呈現出的特質傾向',540,tendencyTop+104,24,'#898294',false);
+  const rowStart=tendencyTop+166;
   const rowGap=(tendencyBottom-78-rowStart)/3;
   roles.forEach((role,i)=>{
     const y=rowStart+i*rowGap,isMain=result.roles.includes(role),color=isMain?'#b84235':'#807b88';
@@ -842,7 +843,7 @@ function paintResultCard(ctx, images, result) {
     if(percents[role]>0)rounded(440,y-23,405*percents[role]/100,17,Math.min(8,405*percents[role]/200),isMain?'#b84235':'#aaa2b8');
     text(`${percents[role]}%`,951,y,36,color,true,100,'right');
   });
-  text('依照這次作答呈現出的特質傾向',540,tendencyBottom-31,24,'#898294',false);
+  text('最終角色綜合您的整體作答結果判定',540,tendencyBottom-31,24,'#898294',false);
   text('東吳第3哩，挑戰在一起',540,1704,42,'#898299');
   text('@su_third_mile',540,1764,30,'#716b83',false);
 }

@@ -2501,6 +2501,5 @@ body::before { opacity: 1; background:
 .result-intro .result-title.is-dual-title { font-size: clamp(1.5rem, 7.2vw, 2.625rem); white-space: nowrap; width: 100%; }
 /* 1010_v4: quiet branding below the result actions */
 .result-brand-footer { margin-top: 30px; padding: 0 8px 8px; text-align: center; color: #91899f; }
-.result-brand-footer p { margin: 0 0 5px; font-size: .97rem; font-weight: 650; }
-.result-brand-footer a { color: #968ea3; font-size: .82rem; text-decoration: none; }
-.result-brand-footer a:focus-visible { outline: 2px solid #91899f; outline-offset: 4px; }
+ .result-brand-footer p { margin: 0; line-height: 1.4; font-size: .97rem; font-weight: 650; }
+.result-brand-footer .result-brand-account { margin-top: 2px; color: #968ea3; font-size: .82rem; font-weight: 400; }
