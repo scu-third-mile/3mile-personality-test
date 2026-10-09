@@ -2497,3 +2497,5 @@ body::before { opacity: 1; background:
 .result-preview-image { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 160px); max-height: calc(100dvh - 160px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); object-fit: contain; border-radius: 12px; -webkit-touch-callout: default; user-select: auto; }
 .image-preview-hint { margin: 0; color: #807b90; font-size: .78rem; text-align: center; line-height: 1.5; }
 .image-preview-wrap .secondary-btn { min-height: 40px; padding: 9px 22px; font-size: .88rem; }
+/* 1010_v3: fit the largest dual title that stays on one line */
+.result-intro .result-title.is-dual-title { font-size: clamp(1.5rem, 7.2vw, 2.625rem); white-space: nowrap; width: 100%; }
