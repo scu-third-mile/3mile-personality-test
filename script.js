@@ -635,7 +635,18 @@ function renderResult(scores, finalRoles) {
     const quoteParts = info.quote.split(" ");
     const quoteText = quoteParts[0];
     resultQuote.innerHTML = `${escapeHtml(quoteText.slice(0, -4))}<span class="quote-tail">${escapeHtml(quoteText.slice(-4))} ${escapeHtml(quoteParts[1])}</span>`;
-    resultDescription.textContent = info.description;
+    const paragraphStarts = {
+      explore: "對你來說",
+      challenge: "對你來說",
+      team: "大家累的時候",
+      steady: "遇到狀況時"
+    };
+    const splitAt = info.description.indexOf(paragraphStarts[role]);
+    const paragraphs = splitAt > 0
+      ? [info.description.slice(0, splitAt), info.description.slice(splitAt)]
+      : [info.description];
+    resultDescription.innerHTML = paragraphs
+      .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
 
     dualBadge.classList.add("hidden");
     resultTagline.classList.add("hidden");
