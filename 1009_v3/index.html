@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4f4c6b" />
+  <title>東吳第3哩｜環島角色測驗</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+
+    <!-- 首頁 -->
+    <section id="homePage" class="page active-page">
+      <div class="home-card">
+        <p class="eyebrow">第15屆 東吳第3哩 單車環島活動</p>
+
+        <h1 class="hero-title">你會是哪一型環島隊友？</h1>
+
+        <p class="hero-subtitle">跟著第3哩出發，遇見環島路上的另一個自己。</p>
+
+        <div class="rover-lineup-wrap" aria-hidden="true">
+          <img src="assets/rover-lineup.png" alt="" class="rover-lineup" />
+        </div>
+
+        <div class="home-copy"><p class="home-instruction">用 8 題情境題，看看屬於你的環島角色。<br>沒有標準答案，跟著第一直覺選就好！</p></div>
+
+        <p class="meta-line">約 1 分鐘｜4 種旅途角色｜匿名作答</p>
+
+        <button id="startBtn" class="primary-btn">開始測驗</button>
+
+        <p class="tagline">一起練習，一起準備，一起出發。</p>
+        <p class="mini-disclaimer">本測驗為趣味體驗性質，非正式心理測驗，僅供參考。</p>
+      </div>
+    </section>
+
+    <!-- 題目頁 -->
+    <section id="quizPage" class="page">
+      <div class="quiz-card">
+        <header class="quiz-header">
+          <button id="backBtn" class="icon-btn" aria-label="上一題">←</button>
+          <div class="progress-wrap" aria-label="作答進度">
+            <div class="progress-track">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <span id="progressText">1 / 8</span>
+          </div>
+        </header>
+
+        <div id="questionArea"></div>
+
+        <p id="quizError" class="error-text" aria-live="polite"></p>
+
+        <button id="nextBtn" class="primary-btn quiz-next">下一題</button>
+      </div>
+    </section>
+
+    <!-- 結果頁 -->
+    <section id="resultPage" class="page">
+      <div class="result-card">
+        <section class="result-intro">
+          <p class="eyebrow">你的環島角色是</p>
+          <div id="resultEmoji" class="result-emoji"></div>
+          <h1 id="resultTitle" class="result-title"></h1>
+          <p id="resultQuote" class="result-quote"></p>
+          <p id="resultDescription" class="result-description"></p>
+          <p id="dualBadge" class="dual-badge hidden">你解鎖了少見的雙重角色！</p>
+          <p id="resultTagline" class="result-tagline hidden"></p>
+        </section>
+
+        <p class="result-keywords">
+          <span class="result-keywords-label">關鍵字</span>
+          <span id="keywordList" class="keyword-list"></span>
+        </p>
+
+        <section class="tendency-card">
+          <h2>你的四種環島傾向</h2>
+          <p class="section-subtitle">依照這次作答呈現出的特質傾向</p>
+          <div id="tendencyList" class="tendency-list"></div>
+          <p class="tendency-note">最終角色會綜合你的整體作答結果判定。</p>
+        </section>
+
+        <section class="reminder-card">
+          <img src="assets/rover-reminder.svg" alt="" class="reminder-rover" aria-hidden="true" />
+          <h2>來自第3哩團隊的小提醒 🚲</h2>
+          <p>不管你是哪一種環島角色</p>
+          <p>都要記得：<strong>安全和團隊合作</strong>永遠擺在最前面</p>
+          <p class="reminder-ending">一起出發，也要一起平安回來</p>
+        </section>
+
+        <section class="links-card">
+          <h2>想更了解第3哩嗎？</h2>
+          <p class="links-intro">最新活動資訊都會放在 IG。想加入我們、一起準備環島，可以從這裡開始！</p>
+
+          <div class="info-list">
+            <a class="info-row info-row-active" href="https://www.instagram.com/su_third_mile/" target="_blank" rel="noopener noreferrer">
+              <span class="info-icon ig-gradient-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="27" height="27" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#FEDA75"/>
+                    <stop offset="25%" stop-color="#FA7E1E"/>
+                    <stop offset="50%" stop-color="#D62976"/>
+                    <stop offset="75%" stop-color="#962FBF"/>
+                    <stop offset="100%" stop-color="#4F5BD5"/>
+                  </linearGradient>
+                </defs>
+                <rect x="3" y="3" width="18" height="18" rx="5"
+                      fill="none" stroke="url(#igGradient)" stroke-width="2.2"/>
+                <circle cx="12" cy="12" r="4"
+                        fill="none" stroke="url(#igGradient)" stroke-width="2.2"/>
+                <circle cx="17.3" cy="6.7" r="1.15" fill="url(#igGradient)"/>
+              </svg>
+            </span>
+              <span class="info-main"><strong>Instagram</strong><small>@su_third_mile</small></span>
+              <span class="info-arrow">›</span>
+            </a>
+
+            <a class="info-row info-row-active" href="https://docs.google.com/forms/d/e/1FAIpQLScO8wuSqCaHdiK0BQct3Wl27Z9nTa-jv2BiIcIcc15caN1d5Q/viewform" target="_blank" rel="noopener noreferrer">
+              <span class="info-icon">📝</span>
+              <span class="info-main"><strong>環島說明會報名</strong><small>點我前往報名</small></span>
+              <span class="info-arrow">›</span>
+            </a>
+
+            <a class="info-row info-row-active" href="https://docs.google.com/forms/d/e/1FAIpQLSdvdQsKOsP_qJeqovaPz669fgZA9uTq1RPLpnlYw_3wmNtHZw/viewform" target="_blank" rel="noopener noreferrer">
+              <span class="info-icon">🚲</span>
+              <span class="info-main"><strong>認證日報名</strong><small>點我前往報名</small></span>
+              <span class="info-arrow">›</span>
+            </a>
+
+            <a class="info-row info-row-active" href="mailto:sucycle15@gmail.com">
+              <span class="info-icon">✉️</span>
+              <span class="info-main"><strong>Email</strong><small>sucycle15@gmail.com</small></span>
+              <span class="info-arrow">›</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="closing-card">
+          <p>現在還沒準備好也沒關係，環島本來就不是一天練成的。從練習開始，一起把「我可以嗎？」慢慢騎成「我們出發吧！」</p>
+        </section>
+
+        <p class="result-disclaimer">
+          本測驗為趣味體驗性質，沒有標準答案，也不是正式心理測驗，結果僅供參考。
+        </p>
+
+        <div class="result-actions">
+          <button id="retryBtn" class="primary-btn">再測一次</button>
+          <button id="homeBtn" class="secondary-btn">回到首頁</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
