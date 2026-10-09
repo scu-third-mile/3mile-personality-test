@@ -1,17 +1,17 @@
 const ROLE_INFO = {
   explore: {
     emoji: "📸",
-    icon: "assets/role-explore.png",
+    icon: "assets/role-explore.svg",
     name: "沿途探索家",
     max: 11,
-    quote: "「都來了，當然要看看這一路會遇到什麼！」",
+    quote: "「都來了，當然要看看這一路會遇到什麼！ 📷」",
     description:
       "你在意的不只是抵達終點，也會期待沿途的風景、美食、城市和第一次體驗。對你來說，環島好玩的地方，就是每天都有新的發現值得記住。",
     keywords: ["探索", "體驗", "風景", "回憶"]
   },
   challenge: {
     emoji: "🔥",
-    icon: "assets/role-challenge.png",
+    icon: "assets/role-challenge.svg",
     name: "熱血挑戰者",
     max: 9,
     quote: "「越難，我越想證明自己做得到。要拼 🔥」",
@@ -21,20 +21,20 @@ const ROLE_INFO = {
   },
   team: {
     emoji: "🤝",
-    icon: "assets/role-team.png",
+    icon: "assets/role-team.svg",
     name: "夥伴黏著劑",
     max: 9,
-    quote: "「去哪裡很重要，但跟誰一起走更重要。」",
+    quote: "「去哪裡很重要，但跟誰一起走更重要。 🤝」",
     description:
       "你很在意一起騎的人、隊伍氣氛和共同回憶。大家累的時候，你可能就是那個願意陪著撐、聊天打氣，讓整個隊伍重新有精神的人。",
     keywords: ["夥伴", "陪伴", "氣氛", "一起完成"]
   },
   steady: {
     emoji: "🛡️",
-    icon: "assets/role-steady.png",
+    icon: "assets/role-steady.svg",
     name: "穩定節奏型",
     max: 11,
-    quote: "「不是騎最快，是知道怎麼一路騎到底。」",
+    quote: "「不是騎最快，是知道怎麼一路騎到底。 🧭」",
     description:
       "你習慣找到適合自己的節奏，知道什麼時候該出力、什麼時候該休息。遇到狀況時也比較不容易慌，是那種穩穩完成、讓人覺得很可靠的人。",
     keywords: ["節奏", "規劃", "冷靜", "可靠"]

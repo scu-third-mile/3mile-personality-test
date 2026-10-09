@@ -2393,3 +2393,26 @@ body::before {
     flex-basis: 26px;
   }
 }
+
+/* 1009_v3: compact home, readable descriptions, larger Rover */
+.home-card { min-height: auto; padding-block: 24px; }
+.home-copy { max-width: 560px; }
+.home-card .hero-subtitle { margin-bottom: 8px; }
+.home-card .rover-lineup-wrap { margin-bottom: 10px; }
+.result-intro .result-description { text-align: left; line-height: 1.7; letter-spacing: 0; text-wrap: wrap; overflow-wrap: break-word; }
+.result-quote { word-break: normal; overflow-wrap: anywhere; text-wrap: balance; }
+.reminder-card { padding-right: 22px; }
+.reminder-card h2 { padding-right: 82px; min-height: 72px; display: flex; align-items: center; line-height: 1.45; }
+.reminder-rover { width: 76px; height: 100px; top: 14px; right: 14px; }
+@media (max-width: 640px) {
+ .home-card { padding: 14px 6px 18px; }
+ .home-card .eyebrow { margin-bottom: 10px; }
+ .home-card .rover-lineup-wrap { height: 82px; }
+ .home-card .rover-lineup { max-height: 82px; }
+ .home-card .meta-line { margin: 10px 0; }
+ .home-card .mini-disclaimer { font-size: .75rem; margin-bottom: 0; }
+ .result-intro .result-description { font-size: .96rem; line-height: 1.7; }
+ .reminder-card { padding-right: 18px; }
+ .reminder-card h2 { font-size: 1.14rem; padding-right: 78px; min-height: 76px; }
+ .reminder-rover { width: 72px; height: 100px; top: 13px; right: 12px; }
+}
