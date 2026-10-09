@@ -2416,3 +2416,51 @@ body::before {
  .reminder-card h2 { font-size: 1.14rem; padding-right: 78px; min-height: 76px; }
  .reminder-rover { width: 72px; height: 100px; top: 13px; right: 12px; }
 }
+
+/* 1009_v4: continuous page background and balanced mobile layout */
+html { min-height: 100%; background-color: #eeeaf3; }
+body { min-height: 100dvh; background: none; background-color: #eeeaf3; isolation: isolate; }
+body::before { opacity: 1; background:
+ radial-gradient(circle at 8% 4%, rgba(203,220,232,.50), transparent 35%),
+ radial-gradient(circle at 92% 10%, rgba(217,210,230,.52), transparent 38%),
+ radial-gradient(circle at 78% 72%, rgba(241,203,201,.30), transparent 36%),
+ radial-gradient(circle at 12% 88%, rgba(231,216,173,.25), transparent 34%),
+ linear-gradient(180deg, #f8f7fa 0%, #f5f3f7 48%, #f7f4f5 100%);
+}
+.app-shell { padding-top: max(20px, env(safe-area-inset-top)); padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+.home-card { justify-content: center; padding-block: 20px; }
+.home-card .hero-subtitle { margin: 10px 0; }
+.home-card .rover-lineup-wrap { margin-bottom: 10px; }
+.home-copy p { margin: 0 0 8px; }
+.home-copy .home-instruction { font-size: .94rem; }
+.home-card .teaser-card { margin-top: 4px; padding: 10px 14px; }
+.home-card .teaser-card p { margin: 0; line-height: 1.55; }
+.mobile-break { display: none; }
+.quote-tail { white-space: nowrap; }
+.result-quote { font-size: clamp(.96rem, 3.65vw, 1.18rem); overflow-wrap: normal; }
+.result-emoji, .result-role-rover, .tendency-rover-icon { filter: none; opacity: 1; }
+.reminder-card { padding: 20px 22px; }
+.reminder-card h2 { display: block; min-height: 0; padding: 0 62px 0 0; font-size: 1.27rem; line-height: 1.4; margin-bottom: 12px; }
+.reminder-rover { width: 52px; height: 72px; right: 14px; top: 14px; filter: none; }
+.reminder-card p { line-height: 1.6; margin-top: 7px; }
+.reminder-card .reminder-ending { margin-top: 12px; }
+.links-card { background: linear-gradient(145deg, #faf9fc, #f5f2f7); -webkit-backdrop-filter: none; backdrop-filter: none; isolation: isolate; }
+.links-card::before { inset: auto; top: 10px; right: 15px; left: auto; bottom: auto; background: none; }
+.info-list { position: relative; background: #f2f0f4; border-radius: 18px; overflow: hidden; box-shadow: none; }
+.info-row, .info-row-active { background: transparent; }
+.info-row:last-child { border-radius: 0 0 18px 18px; }
+@media(max-width: 640px) {
+ .app-shell { padding-top: max(14px, env(safe-area-inset-top)); padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+ .home-card { padding: 12px 6px 18px; }
+ .mobile-break { display: block; }
+ .home-card .hero-subtitle { font-size: 1rem; line-height: 1.5; }
+ .home-card .rover-lineup-wrap { height: 86px; margin-bottom: 8px; }
+ .home-card .rover-lineup { max-height: 86px; }
+ .home-copy { font-size: .93rem; line-height: 1.6; }
+ .home-card .teaser-card { font-size: .9rem; }
+ .home-card .meta-line { margin: 11px 0 9px; font-size: .88rem; }
+ .result-quote { font-size: clamp(.93rem, 3.65vw, 1.06rem); }
+ .reminder-card { padding: 18px 16px; }
+ .reminder-card h2 { font-size: 1.2rem; padding-right: 60px; min-height: 0; margin-bottom: 10px; }
+ .reminder-rover { width: 50px; height: 70px; right: 12px; top: 13px; }
+}
