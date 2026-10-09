@@ -802,7 +802,7 @@ function paintResultCard(ctx, images, result) {
   };
   const paragraphLines=paragraphs.map(wrap);
   const lineCount=paragraphLines.reduce((n,lines)=>n+lines.length,0);
-  const lastBaseline=840+(lineCount-1)*52+(paragraphLines.length-1)*18;
+  const lastBaseline=890+(lineCount-1)*52+(paragraphLines.length-1)*18;
   const cardBottom=lastBaseline+(dual?125:70);
   const background=ctx.createLinearGradient(0,0,1080,1920);
   background.addColorStop(0,'#eae6f2'); background.addColorStop(1,'#f5f0ed');
@@ -818,11 +818,11 @@ function paintResultCard(ctx, images, result) {
     result.roles.forEach((role,i)=>rover(role,250+i*300,352,285,280));
   } else rover(result.roles[0],345,347,390,299);
   const title=result.roles.map(role=>ROLE_INFO[role].name).join(' × ');
-  text(title,540,691,dual?57:78,'#fffdf8',true,880);
+  text(title,540,735,dual?57:78,'#fffdf8',true,880);
   const quote=dual?(dualInfo?.tagline || '一起展現你的環島角色') : ROLE_INFO[result.roles[0]].quote;
-  text(quote,540,760,37,'#fffdf8',true,875);
+  text(quote,540,810,37,'#fffdf8',true,875);
 
-  let y=840;
+  let y=890;
   paragraphLines.forEach((lines,index)=>{
     if(index)y+=18;
     lines.forEach(line=>{text(line,160,y,36,'#eee9f2',false,790,'left');y+=52;});
