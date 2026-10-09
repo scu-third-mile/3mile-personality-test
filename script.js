@@ -764,12 +764,12 @@ function paintResultCard(ctx, images, result) {
   text('你會是哪一型環島隊友？',540,216,49,'#403c57');
   const purple=ctx.createLinearGradient(55,255,1025,1170);
   purple.addColorStop(0,'#625c79');purple.addColorStop(1,'#403d59');
-  rounded(55,255,970,915,48,purple);
+  rounded(55,255,970,875,48,purple);
   text('✦  ·  ✧  ·  ✦',172,302,24,'#a69bb6',false,240);
   text('你的環島角色是',540,333,34,'#efc7c1');
   if(dual) {
-    result.roles.forEach((role,i)=>rover(role,275+i*280,367,260,245));
-  } else rover(result.roles[0],370,362,340,260);
+    result.roles.forEach((role,i)=>rover(role,250+i*300,352,285,280));
+  } else rover(result.roles[0],345,347,390,299);
   const title=result.roles.map(role=>ROLE_INFO[role].name).join(' × ');
   text(title,540,691,dual?57:78,'#fffdf8',true,880);
   const quote=dual?(dualInfo?.tagline || '一起展現你的環島角色') : ROLE_INFO[result.roles[0]].quote;
@@ -787,11 +787,11 @@ function paintResultCard(ctx, images, result) {
     const index=info.description.indexOf(marker);
     paragraphs=index>0?[info.description.slice(0,index),info.description.slice(index)]:[info.description];
   }
-  ctx.font=`500 34px ${CARD_FONT}`;
+  ctx.font=`500 36px ${CARD_FONT}`;
   const wrap = value => {
     const lines=[];let line='';
     for(const char of value) {
-      if(line && ctx.measureText(line+char).width>810 && !/[，。、！？：；」』）]/.test(char)) {lines.push(line);line=char;}
+      if(line && ctx.measureText(line+char).width>760 && !/[，。、！？：；」』）]/.test(char)) {lines.push(line);line=char;}
       else line+=char;
     }
     if(line)lines.push(line);return lines;
@@ -799,22 +799,23 @@ function paintResultCard(ctx, images, result) {
   let y=840;
   paragraphs.forEach((paragraph,index)=>{
     if(index)y+=18;
-    wrap(paragraph).forEach(line=>{text(line,135,y,34,'#eee9f2',false,840,'left');y+=53;});
+    wrap(paragraph).forEach(line=>{text(line,160,y,36,'#eee9f2',false,790,'left');y+=52;});
   });
-  if(dual)text('解鎖少見的雙重角色',540,1133,25,'#efc7c1',false);
+  if(dual)text('解鎖少見的雙重角色',540,1095,25,'#efc7c1',false);
 
-  rounded(55,1210,970,450,42,'#faf8fc');
-  text('你的四種環島角色傾向',540,1276,42,'#403c57');
+  rounded(55,1170,970,450,42,'#faf8fc');
+  text('你的四種環島角色傾向',540,1236,42,'#403c57');
   roles.forEach((role,i)=>{
-    const y=1347+i*78,isMain=result.roles.includes(role),color=isMain?'#b84235':'#807b88';
+    const y=1307+i*78,isMain=result.roles.includes(role),color=isMain?'#b84235':'#807b88';
     rover(role,88,y-43,65,62);
     text(ROLE_INFO[role].name,174,y,32,color,true,260,'left');
     rounded(440,y-23,405,17,9,'#e6e1ed');
     if(percents[role]>0)rounded(440,y-23,405*percents[role]/100,17,Math.min(8,405*percents[role]/200),isMain?'#b84235':'#aaa2b8');
     text(`${percents[role]}%`,951,y,36,color,true,100,'right');
   });
-  text('依照這次作答呈現出的特質傾向',540,1629,24,'#898294',false);
-  text('東吳第3哩，挑戰在一起',540,1752,42,'#4f4c6b');
+  text('依照這次作答呈現出的特質傾向',540,1589,24,'#898294',false);
+  text('東吳第3哩，挑戰在一起',540,1704,42,'#898299');
+  text('@su_third_mile',540,1764,30,'#716b83',false);
 }
 async function createResultPng(result) {
   if(document.fonts?.ready)await document.fonts.ready;
