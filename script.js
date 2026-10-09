@@ -828,7 +828,11 @@ function paintResultCard(ctx, images, result) {
     lines.forEach(line=>{text(line,160,y,36,'#eee9f2',false,790,'left');y+=52;});
   });
   if(dual)text('解鎖少見的雙重角色',540,lastBaseline+65,25,'#efc7c1',false);
-  const tendencyTop=cardBottom+40;
+  const keywords=dual
+    ? (dualInfo?.keywords || [...new Set(result.roles.flatMap(role=>ROLE_INFO[role].keywords))].slice(0,4))
+    : ROLE_INFO[result.roles[0]].keywords;
+  text('關鍵字  '+keywords.join(' ｜ '),540,cardBottom+57,28,'#807b88',true,920);
+  const tendencyTop=cardBottom+100;
   const tendencyBottom=1620;
   rounded(55,tendencyTop,970,tendencyBottom-tendencyTop,42,'#faf8fc');
   text('你的四種環島角色傾向',540,tendencyTop+62,42,'#403c57');
