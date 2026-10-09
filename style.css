@@ -1630,3 +1630,497 @@ body {
       inset 0 1px 0 rgba(255,255,255,.72);
   }
 }
+
+
+/* =========================================================
+   1009_v1｜宇宙虹彩玻璃 + Rover 吉祥物
+   以 1004_v3 為基礎，只調整視覺與加入活動吉祥物
+   ========================================================= */
+
+:root {
+  --cosmic: #4f4c6b;
+  --cosmic-dark: #403d5a;
+  --cosmic-soft: #74708c;
+  --brand-red: #b84235;
+  --brand-red-dark: #96372d;
+  --brand-red-soft: #f4dfdc;
+
+  --page-bg: #f5f3f7;
+  --cream: #fff9f3;
+  --ink-1009: #292831;
+  --muted-1009: #706d79;
+  --glass-1009: rgba(255, 255, 255, 0.68);
+  --glass-border-1009: rgba(255, 255, 255, 0.88);
+
+  --iris-blue: #cbdce8;
+  --iris-purple: #d9d2e6;
+  --iris-pink: #f1cbc9;
+  --iris-gold: #e7d8ad;
+}
+
+/* ---------- 整體背景 ---------- */
+body {
+  color: var(--ink-1009);
+  background:
+    radial-gradient(circle at 8% 4%, rgba(203,220,232,.50), transparent 24%),
+    radial-gradient(circle at 92% 10%, rgba(217,210,230,.52), transparent 26%),
+    radial-gradient(circle at 78% 72%, rgba(241,203,201,.30), transparent 28%),
+    radial-gradient(circle at 12% 88%, rgba(231,216,173,.25), transparent 25%),
+    linear-gradient(180deg, #f8f7fa 0%, var(--page-bg) 48%, #f7f4f5 100%);
+}
+
+/* 微弱星點，維持乾淨不搶字 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .42;
+  background-image:
+    radial-gradient(circle at 14% 18%, rgba(79,76,107,.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 8%, rgba(184,66,53,.22) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 91% 34%, rgba(79,76,107,.23) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 22% 68%, rgba(184,66,53,.17) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 91%, rgba(79,76,107,.19) 0 1px, transparent 1.5px);
+}
+
+/* ---------- 基本字色 ---------- */
+.hero-title,
+.question-title,
+.result-title,
+.tendency-card h2,
+.reminder-card h2,
+.links-card h2 {
+  color: var(--ink-1009);
+}
+
+.hero-subtitle,
+.home-copy,
+.result-description,
+.section-subtitle,
+.tendency-note,
+.links-intro,
+.result-disclaimer,
+.mini-disclaimer {
+  color: var(--muted-1009);
+}
+
+/* ---------- 首頁 ---------- */
+.home-card {
+  position: relative;
+}
+
+.home-card > .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  color: var(--cream);
+  background:
+    linear-gradient(135deg, var(--cosmic-dark), var(--cosmic));
+  box-shadow:
+    0 8px 22px rgba(64,61,90,.16),
+    inset 0 1px 0 rgba(255,255,255,.16);
+  letter-spacing: .08em;
+}
+
+.hero-title {
+  text-shadow: 0 1px 0 rgba(255,255,255,.72);
+}
+
+.hero-subtitle {
+  color: #504d5b;
+}
+
+/* Rover 首頁列隊 */
+.rover-lineup-wrap {
+  width: min(92%, 520px);
+  margin: 0 auto 12px;
+  padding: 2px 10px;
+}
+
+.rover-lineup {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 8px 12px rgba(64,61,90,.10))
+    drop-shadow(0 1px 0 rgba(255,255,255,.55));
+}
+
+/* 首頁玻璃提示卡 */
+.teaser-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.48)),
+    radial-gradient(circle at 12% 10%, rgba(203,220,232,.36), transparent 34%),
+    radial-gradient(circle at 88% 18%, rgba(217,210,230,.34), transparent 34%),
+    radial-gradient(circle at 76% 92%, rgba(241,203,201,.20), transparent 31%);
+  border: 1px solid var(--glass-border-1009);
+  box-shadow:
+    0 12px 30px rgba(64,61,90,.08),
+    inset 0 1px 0 rgba(255,255,255,.92);
+  -webkit-backdrop-filter: blur(18px) saturate(122%);
+  backdrop-filter: blur(18px) saturate(122%);
+}
+
+.teaser-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    transparent 13%,
+    rgba(255,255,255,.46) 31%,
+    rgba(255,255,255,.10) 47%,
+    transparent 65%
+  );
+  opacity: .65;
+}
+
+.teaser-question {
+  color: var(--brand-red);
+}
+
+/* ---------- 按鈕 ---------- */
+.primary-btn {
+  color: var(--cream);
+  background:
+    linear-gradient(135deg, #c14b3e 0%, var(--brand-red) 56%, #a93b31 100%);
+  box-shadow:
+    0 9px 22px rgba(184,66,53,.22),
+    inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.primary-btn:hover {
+  background:
+    linear-gradient(135deg, #b94236 0%, var(--brand-red-dark) 100%);
+}
+
+.secondary-btn {
+  color: var(--cosmic-dark);
+  background: rgba(255,255,255,.70);
+  border: 1.5px solid rgba(79,76,107,.50);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82);
+}
+
+.secondary-btn:hover {
+  background: rgba(255,255,255,.90);
+}
+
+/* ---------- 題目頁：清楚優先 ---------- */
+.quiz-card {
+  position: relative;
+}
+
+.icon-btn {
+  color: var(--cosmic-dark);
+  border-color: rgba(79,76,107,.22);
+  background: rgba(255,255,255,.76);
+  box-shadow: 0 5px 16px rgba(64,61,90,.06);
+}
+
+.progress-track {
+  background: #e8e5ee;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #c55347, var(--brand-red));
+  box-shadow: 0 0 12px rgba(184,66,53,.18);
+}
+
+#progressText {
+  color: var(--cosmic-soft);
+}
+
+.question-kicker {
+  color: var(--brand-red);
+}
+
+.option-card {
+  color: var(--ink-1009);
+  background: rgba(255,255,255,.78);
+  border: 1.5px solid rgba(79,76,107,.14);
+  box-shadow:
+    0 7px 20px rgba(64,61,90,.045),
+    inset 0 1px 0 rgba(255,255,255,.88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.option-card:hover {
+  border-color: rgba(184,66,53,.34);
+  background: rgba(255,255,255,.90);
+}
+
+.option-card.selected {
+  color: var(--ink-1009);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.90), rgba(244,223,220,.78));
+  border-color: rgba(184,66,53,.70);
+  box-shadow:
+    0 8px 22px rgba(184,66,53,.09),
+    inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+/* ---------- 結果頁：深灰紫揭曉區 ---------- */
+.result-intro {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+  padding: 28px 24px 26px;
+  border-radius: 26px;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 86% 10%, rgba(241,203,201,.16), transparent 27%),
+    radial-gradient(circle at 10% 92%, rgba(203,220,232,.14), transparent 30%),
+    linear-gradient(145deg, #57536f 0%, var(--cosmic) 48%, var(--cosmic-dark) 100%);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow:
+    0 15px 34px rgba(64,61,90,.18),
+    inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+.result-intro::before {
+  content: "✦   ·   ✧   ·   ✦";
+  position: absolute;
+  top: 10px;
+  left: 18px;
+  color: rgba(255,249,243,.30);
+  font-size: .78rem;
+  letter-spacing: .55em;
+}
+
+.result-intro .eyebrow {
+  position: relative;
+  z-index: 2;
+  color: #f2c2bc;
+}
+
+.result-intro .result-title,
+.result-intro .result-quote,
+.result-intro .result-description,
+.result-intro .result-tagline {
+  position: relative;
+  z-index: 2;
+  color: var(--cream);
+}
+
+.result-intro .result-description {
+  color: rgba(255,249,243,.86);
+}
+
+.result-emoji {
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.12));
+}
+
+.dual-badge {
+  position: relative;
+  z-index: 2;
+  color: var(--cream);
+  background: rgba(184,66,53,.86);
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+/* 結果頁 Rover 小徽章 */
+.result-rover-wrap {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 1;
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.62);
+  background: rgba(255,255,255,.90);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.13),
+    0 0 0 4px rgba(255,255,255,.07);
+}
+
+.result-rover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 關鍵字 */
+.result-keywords-label {
+  color: var(--cosmic-dark);
+}
+
+.keyword-chip {
+  color: #4b485a;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(79,76,107,.14);
+}
+
+/* ---------- 玻璃卡片 ---------- */
+.tendency-card,
+.reminder-card,
+.links-card,
+.closing-card {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.76), rgba(255,255,255,.55));
+  border: 1px solid var(--glass-border-1009);
+  box-shadow:
+    0 11px 28px rgba(64,61,90,.065),
+    inset 0 1px 0 rgba(255,255,255,.94);
+  -webkit-backdrop-filter: blur(18px) saturate(116%);
+  backdrop-filter: blur(18px) saturate(116%);
+}
+
+.tendency-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.tendency-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 5% 0%, rgba(203,220,232,.22), transparent 30%),
+    radial-gradient(circle at 100% 10%, rgba(217,210,230,.22), transparent 29%),
+    radial-gradient(circle at 82% 100%, rgba(241,203,201,.13), transparent 32%);
+}
+
+/* 四種傾向 */
+.tendency-track {
+  background: #e8e5ee;
+}
+
+.tendency-fill {
+  background: #aaa6b8;
+}
+
+.tendency-row.is-result .tendency-fill {
+  background: linear-gradient(90deg, #cf675b, var(--brand-red));
+  box-shadow: 0 0 10px rgba(184,66,53,.15);
+}
+
+.tendency-row.is-result .tendency-name,
+.tendency-row.is-result .tendency-value {
+  color: var(--brand-red);
+}
+
+/* 安全提醒 */
+.reminder-card strong {
+  color: var(--brand-red);
+}
+
+/* ---------- 活動資訊：帶一點宇宙品牌感 ---------- */
+.links-card {
+  position: relative;
+  overflow: hidden;
+  border-top: 4px solid var(--cosmic);
+}
+
+.links-card::before {
+  content: "✦  ·  ✧  ·  ✦";
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: rgba(79,76,107,.18);
+  letter-spacing: .3em;
+  font-size: .72rem;
+}
+
+.info-list {
+  background: rgba(79,76,107,.055);
+  border: 1px solid rgba(79,76,107,.10);
+}
+
+.info-row {
+  background: rgba(255,255,255,.46);
+}
+
+.info-row:hover {
+  background: rgba(244,223,220,.48);
+}
+
+.info-arrow,
+.info-row-active strong {
+  color: var(--brand-red);
+}
+
+/* Instagram icon 保持原本官方漸層並置中 */
+.ig-gradient-icon {
+  transform: translateY(3px);
+}
+
+/* 收尾 */
+.closing-card {
+  border-left: 4px solid rgba(79,76,107,.72);
+}
+
+.tagline {
+  color: var(--cosmic-dark);
+}
+
+.meta-line {
+  color: var(--cosmic-soft);
+}
+
+/* ---------- 手機微調 ---------- */
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .home-card {
+    padding: 24px 8px 28px;
+  }
+
+  .rover-lineup-wrap {
+    width: min(96%, 420px);
+    margin-bottom: 8px;
+    padding-inline: 2px;
+  }
+
+  .teaser-card,
+  .tendency-card,
+  .reminder-card,
+  .links-card,
+  .closing-card,
+  .option-card {
+    -webkit-backdrop-filter: blur(13px) saturate(112%);
+    backdrop-filter: blur(13px) saturate(112%);
+  }
+
+  .result-intro {
+    padding: 28px 20px 24px;
+  }
+
+  .result-rover-wrap {
+    width: 72px;
+    height: 72px;
+    top: 16px;
+    right: 14px;
+    opacity: .92;
+  }
+
+  .result-intro .eyebrow {
+    padding-right: 76px;
+  }
+}
+
+@media (max-width: 390px) {
+  .result-rover-wrap {
+    width: 62px;
+    height: 62px;
+  }
+
+  .result-intro .eyebrow {
+    padding-right: 62px;
+  }
+}
