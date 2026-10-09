@@ -2475,3 +2475,15 @@ body::before { opacity: 1; background:
  .home-card .teaser-card { font-size: .9rem; line-height: 1.6; }
  .result-intro .result-description { line-height: 1.65; }
 }
+
+/* 1009_v6: centered closing text grouped by meaning */
+.closing-card { text-align: center; padding: 20px 18px; }
+.closing-card p { margin: 0; line-height: 1.65; text-wrap: balance; }
+.closing-card .closing-message { margin-top: 10px; }
+.closing-lead > span, .closing-message > span { display: block; }
+.closing-phrase { white-space: nowrap; }
+.tendency-card h2 { text-wrap: balance; line-height: 1.4; }
+@media (max-width: 640px) {
+ .closing-card { padding: 18px 14px; font-size: .94rem; }
+ .tendency-card h2 { font-size: clamp(1.05rem, 4.55vw, 1.25rem); }
+}
