@@ -1,7 +1,7 @@
 const ROLE_INFO = {
   explore: {
     emoji: "📸",
-    icon: "assets/role-explore.svg",
+    icon: "assets/role-explore.png?v=20261011",
     name: "沿途探索家",
     max: 11,
     quote: "都來了，當然要看看沿途有什麼 📷",
@@ -11,7 +11,7 @@ const ROLE_INFO = {
   },
   challenge: {
     emoji: "🔥",
-    icon: "assets/role-challenge.svg",
+    icon: "assets/role-challenge.png?v=20261011",
     name: "熱血挑戰者",
     max: 9,
     quote: "越難，越想證明自己做得到 🔥",
@@ -21,7 +21,7 @@ const ROLE_INFO = {
   },
   team: {
     emoji: "🤝",
-    icon: "assets/role-team.svg",
+    icon: "assets/role-team.png?v=20261011",
     name: "夥伴黏著劑",
     max: 9,
     quote: "去哪很重要，跟誰一起更重要 🤝",
@@ -31,7 +31,7 @@ const ROLE_INFO = {
   },
   steady: {
     emoji: "🛡️",
-    icon: "assets/role-steady.svg",
+    icon: "assets/role-steady.png?v=20261011",
     name: "穩定節奏型",
     max: 11,
     quote: "找到自己的節奏，一路騎到底 🧭",
@@ -222,8 +222,8 @@ const QUESTIONS = [
   },
   {
     id: "q7",
-    title: "環島四大酷刑，硬要選一個，你寧願遇到哪個？",
-    
+    title: '<span class="q7-title-line">環島四大酷刑，若只能選一個，</span><span class="q7-title-line">你<span class="q7-title-emphasis">比較能接受</span>哪一個？</span>',
+    note: "請選相對比較能接受的一個，不是選最怕的。",
     type: "single",
     options: [
       {
@@ -344,6 +344,7 @@ function showPage(pageEl) {
 }
 
 function startQuiz() {
+  try { window.ThirdMileTelemetry?.newSession(); } catch (_) {}
   currentQuestion = 0;
   answers = {};
   otherText = "";
@@ -352,6 +353,7 @@ function startQuiz() {
 }
 
 function restartQuiz() {
+  try { window.ThirdMileTelemetry?.newSession(); } catch (_) {}
   currentQuestion = 0;
   answers = {};
   otherText = "";
@@ -360,6 +362,7 @@ function restartQuiz() {
 }
 
 function goHome() {
+  try { window.ThirdMileTelemetry?.resetSession(); } catch (_) {}
   currentQuestion = 0;
   answers = {};
   otherText = "";
@@ -562,6 +565,8 @@ function showResult() {
 
   renderResult(scores, finalRoles);
   showPage(resultPage);
+  // 結果先正常顯示，再以背景方式嘗試傳送統計；錯誤絕不阻擋結果頁。
+  try { window.ThirdMileTelemetry?.sendResult(answers, otherText, scores, finalRoles, ROLE_INFO, normalizeDisplayPercents); } catch (_) {}
 }
 
 
@@ -731,7 +736,7 @@ homeBtn.addEventListener("click", goHome);
 let currentResult = null;
 let resultImageCache = null;
 const CARD_FONT = '"PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif';
-const CARD_CROPS = { explore: [40, 0, 334, 498], challenge: [0, 0, 473, 518], team: [23, 0, 540, 400], steady: [50, 0, 438, 519] };
+const CARD_CROPS = { explore: [0, 17, 1239, 1237], challenge: [21, 0, 1221, 1254], team: [0, 9, 1242, 1245], steady: [0, 0, 1238, 1254] };
 function loadCardImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -770,40 +775,30 @@ function paintResultCard(ctx, images, result) {
     const index=info.description.indexOf(marker);
     paragraphs=index>0?[info.description.slice(0,index),info.description.slice(index)]:[info.description];
   }
-  // Compute all lines at the same font size before painting the card.
-  ctx.font=`500 36px ${CARD_FONT}`;
-  const wrap = value => {
-    const protectedWords=['聊天打氣','一起完成','共同回憶','沿途的風景','穩穩完成','自己的節奏'];
-    const tokens=value.match(new RegExp(protectedWords.join('|')+'|.', 'gu')) || [];
-    const lines=[];let line='';
-    for(const token of tokens) {
-      if(line && ctx.measureText(line+token).width>760 && !/^[，。、！？：；」』）]$/.test(token)) {lines.push(line);line=token;}
-      else line+=token;
+  // Keep paragraph boundaries; wrap within each paragraph only at the actual width.
+  const descriptionStart=890, paragraphGap=18, descriptionWidth=760;
+  const wrapParagraph = value => {
+    const lines=[]; let line='';
+    for(const char of [...value]) {
+      if(line && ctx.measureText(line+char).width>descriptionWidth && !/^[，。、！？：；」』）]$/.test(char)) {
+        lines.push(line); line=char;
+      } else line+=char;
     }
     if(line)lines.push(line);
-    // Share space between the last two lines instead of leaving a tiny final line.
-    if(lines.length>1) {
-      const index=lines.length-2,last=lines[index+1];
-      if(ctx.measureText(last).width<285) {
-        const chars=[...lines[index]];
-        let tail=last;
-        while(chars.length>1 && ctx.measureText(chars.join('')).width>ctx.measureText(tail).width+72) {
-          const proposed=chars[chars.length-1]+tail;
-          if(ctx.measureText(proposed).width>760)break;
-          tail=chars.pop()+tail;
-        }
-        const left=chars.join('');
-        if(!/^[，。、！？：；」』）]/.test(tail) && !protectedWords.some(word=>word.includes(left.slice(-1)+tail[0]))) {
-          lines[index]=left;lines[index+1]=tail;
-        }
-      }
-    }
     return lines;
   };
-  const paragraphLines=paragraphs.map(wrap);
-  const lineCount=paragraphLines.reduce((n,lines)=>n+lines.length,0);
-  const lastBaseline=890+(lineCount-1)*52+(paragraphLines.length-1)*18;
-  const cardBottom=lastBaseline+(dual?125:70);
+  let descriptionSize=36, paragraphLines, lineHeight, lastBaseline, cardBottom;
+  while(true) {
+    ctx.font=`500 ${descriptionSize}px ${CARD_FONT}`;
+    paragraphLines=paragraphs.map(wrapParagraph);
+    lineHeight=Math.round(descriptionSize*1.44);
+    const lineCount=paragraphLines.reduce((n,lines)=>n+lines.length,0);
+    lastBaseline=descriptionStart+(lineCount-1)*lineHeight+(paragraphLines.length-1)*paragraphGap;
+    cardBottom=lastBaseline+(dual?90:70);
+    // Reserve room for the four separate tendency rows and the footer within 9:16.
+    if(cardBottom+100+166+3*78+78+132<=1880 || descriptionSize<=30)break;
+    descriptionSize--;
+  }
   const background=ctx.createLinearGradient(0,0,1080,1920);
   background.addColorStop(0,'#eae6f2'); background.addColorStop(1,'#f5f0ed');
   ctx.fillStyle=background;ctx.fillRect(0,0,1080,1920);
@@ -822,10 +817,10 @@ function paintResultCard(ctx, images, result) {
   const quote=dual?(dualInfo?.tagline || '一起展現你的環島角色') : ROLE_INFO[result.roles[0]].quote;
   text(quote,540,810,37,'#fffdf8',true,875);
 
-  let y=890;
+  let y=descriptionStart;
   paragraphLines.forEach((lines,index)=>{
-    if(index)y+=18;
-    lines.forEach(line=>{text(line,160,y,36,'#eee9f2',false,790,'left');y+=52;});
+    if(index)y+=paragraphGap;
+    lines.forEach(line=>{text(line,160,y,descriptionSize,'#eee9f2',false,790,'left');y+=lineHeight;});
   });
   if(dual)text('解鎖少見的雙重角色',540,lastBaseline+65,25,'#efc7c1',false);
   const keywords=dual
@@ -833,27 +828,28 @@ function paintResultCard(ctx, images, result) {
     : ROLE_INFO[result.roles[0]].keywords;
   text('關鍵字  '+keywords.join(' ｜ '),540,cardBottom+57,28,'#807b88',true,920);
   const tendencyTop=cardBottom+100;
-  const tendencyBottom=1620;
+  const rowGap=78;
+  const tendencyBottom=tendencyTop+166+3*rowGap+78;
   rounded(55,tendencyTop,970,tendencyBottom-tendencyTop,42,'#faf8fc');
   text('你的四種環島角色傾向',540,tendencyTop+62,42,'#403c57');
   text('依照這次作答呈現出的特質傾向',540,tendencyTop+104,24,'#898294',false);
   const rowStart=tendencyTop+166;
-  const rowGap=(tendencyBottom-78-rowStart)/3;
+
   roles.forEach((role,i)=>{
     const y=rowStart+i*rowGap,isMain=result.roles.includes(role),color=isMain?'#b84235':'#807b88';
-    rover(role,88,y-43,65,62);
+    rover(role,88,y-43,60,58);
     text(ROLE_INFO[role].name,174,y,32,color,true,260,'left');
     rounded(440,y-23,405,17,9,'#e6e1ed');
     if(percents[role]>0)rounded(440,y-23,405*percents[role]/100,17,Math.min(8,405*percents[role]/200),isMain?'#b84235':'#aaa2b8');
     text(`${percents[role]}%`,951,y,36,color,true,100,'right');
   });
   text('最終角色綜合您的整體作答結果判定',540,tendencyBottom-31,24,'#898294',false);
-  text('東吳第3哩，挑戰在一起',540,1704,42,'#898299');
-  text('@su_third_mile',540,1764,30,'#716b83',false);
+  text('東吳第3哩，挑戰在一起',540,tendencyBottom+72,42,'#898299');
+  text('@su_third_mile',540,tendencyBottom+132,30,'#716b83',false);
 }
 async function createResultPng(result) {
   if(document.fonts?.ready)await document.fonts.ready;
-  const entries=await Promise.all(Object.keys(ROLE_INFO).map(async role=>[role,await loadCardImage(`assets/role-${role}.png`)]));
+  const entries=await Promise.all(Object.keys(ROLE_INFO).map(async role=>[role,await loadCardImage(`assets/role-${role}.png?v=20261011`)]));
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1920;
   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('無法產生圖片');
   paintResultCard(ctx,Object.fromEntries(entries),result);

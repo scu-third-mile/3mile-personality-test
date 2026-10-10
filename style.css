@@ -2503,3 +2503,19 @@ body::before { opacity: 1; background:
 .result-brand-footer { margin-top: 30px; padding: 0 8px 8px; text-align: center; color: #91899f; }
  .result-brand-footer p { margin: 0; line-height: 1.4; font-size: .97rem; font-weight: 650; }
 .result-brand-footer .result-brand-account { margin-top: 2px; color: #968ea3; font-size: .82rem; font-weight: 400; }
+
+/* 1010_BE_v3: Q7 強調「比較能接受」，明確區別於最害怕。 */
+.question-title .q7-title-line {
+  display: block;
+}
+.question-title .q7-title-emphasis {
+  color: #b64435;
+  font-weight: 900;
+}
+
+/* 1010_BE_v4: Q7 title uses shorter first line; keep emphasis, other questions unchanged. */
+@media (max-width: 390px) {
+  .question-title:has(.q7-title-line) {
+    font-size: clamp(1.35rem, 4.9vw, 2rem);
+  }
+}
