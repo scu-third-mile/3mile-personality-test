@@ -2519,3 +2519,5 @@ body::before { opacity: 1; background:
     font-size: clamp(1.35rem, 4.9vw, 2rem);
   }
 }
+
+.info-row-unavailable .info-main strong { color: var(--brand-red); }
