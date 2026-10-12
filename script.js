@@ -855,16 +855,58 @@ async function createResultPng(result) {
   paintResultCard(ctx,Object.fromEntries(entries),result);
   return canvas.toDataURL('image/png');
 }
+// Share the exact same 1080 × 1920 PNG used by the existing Save Result flow.
+// Browser security does not permit a website to publish straight into IG Stories.
+async function getCachedResultImage(result) {
+  const key=JSON.stringify(result);
+  if(resultImageCache?.key===key)return resultImageCache.src;
+  const src=await createResultPng(result);
+  resultImageCache={key,src};
+  return src;
+}
+function showShareImagePreview(src,message) {
+  const image=document.getElementById('resultPreviewImage');
+  image.src=src;
+  document.getElementById('imagePreviewStatus').textContent=message;
+  showPage(document.getElementById('imagePreviewPage'));
+}
+document.getElementById('shareResultBtn').addEventListener('click',async()=>{
+  if(!currentResult)return;
+  const button=document.getElementById('shareResultBtn');
+  button.disabled=true;button.textContent='分享圖片準備中…';
+  try {
+    const src=await getCachedResultImage(currentResult);
+    const response=await fetch(src);
+    const blob=await response.blob();
+    const file=new File([blob],'第3哩_環島人格結果.png',{type:'image/png'});
+    if(typeof navigator.share==='function' && typeof navigator.canShare==='function' && navigator.canShare({files:[file]})) {
+      try {
+        await navigator.share({files:[file]});
+        return;
+      } catch(error) {
+        // Cancelling the share sheet is intentional; don't force a preview.
+        if(error?.name==='AbortError')return;
+      }
+    }
+    showShareImagePreview(src,'此裝置無法直接分享圖片。請長按圖片儲存，再至 Instagram 限時動態上傳。');
+  } catch(error) {
+    document.getElementById('resultPreviewImage').removeAttribute('src');
+    document.getElementById('imagePreviewStatus').textContent='分享圖片暫時無法產生，請返回結果後重試。';
+    showPage(document.getElementById('imagePreviewPage'));
+  } finally {
+    button.disabled=false;button.textContent='分享此結果';
+  }
+});
 document.getElementById('saveResultBtn').addEventListener('click',async()=>{
   if(!currentResult)return;
   const button=document.getElementById('saveResultBtn');
   const image=document.getElementById('resultPreviewImage');
   const status=document.getElementById('imagePreviewStatus');
-  const result=currentResult,key=JSON.stringify(result);
+  const result=currentResult;
   button.disabled=true;button.textContent='圖片製作中…';
   try {
-    const src=resultImageCache?.key===key?resultImageCache.src:await createResultPng(result);
-    resultImageCache={key,src}; image.src=src;
+    const src=await getCachedResultImage(result);
+    image.src=src;
     status.textContent='長按圖片或截圖保存';
     showPage(document.getElementById('imagePreviewPage'));
   } catch(error) {
