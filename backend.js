@@ -1,10 +1,10 @@
-/* 1011_BE_v9 — 獨立、盡力傳送的匿名測驗統計。
+/* 1011_BE_v10 — 獨立、盡力傳送的匿名測驗統計。
  * 只發送一次，不等待回應、不重試、不阻擋結果頁。
  * Apps Script 不支援在此跨網域模式下可靠讀取回應；傳送成功不代表已寫入。
  */
 (function () {
   "use strict";
-  const VERSION = "1011_BE_v9"; // 後端使用 1010_BE_vN 格式驗證
+  const VERSION = "1011_BE_v10"; // 後端使用 1010_BE_vN 格式驗證
   let sessionId = null;
   let submitted = false;
 

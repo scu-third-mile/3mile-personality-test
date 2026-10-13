@@ -412,20 +412,22 @@ function renderQuestion() {
         ${option.detail ? `<span class="option-detail">${option.detail}</span>` : ""}
       </button>
     `;
+
+    // 將「其他」文字框緊接在該選項下方，避免被後面的選項隔開。
+    if (q.id === "q8" && option.key === "other" && isSelected) {
+      html += `
+        <textarea
+          id="otherInput"
+          class="other-input"
+          maxlength="120"
+          aria-label="其他擔心事項（必填）"
+          placeholder="請填寫至少 1 個字（必填，最多 120 字）"
+        >${escapeHtml(otherText)}</textarea>
+      `;
+    }
   });
 
   html += "</div>";
-
-  if (q.id === "q8" && Array.isArray(selected) && selected.includes("other")) {
-    html += `
-      <textarea
-        id="otherInput"
-        class="other-input"
-        maxlength="120"
-        placeholder="請填寫至少 1 個字（必填，最多 120 字）"
-      >${escapeHtml(otherText)}</textarea>
-    `;
-  }
 
   questionArea.innerHTML = html;
 
