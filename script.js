@@ -312,6 +312,12 @@ const QUESTIONS = [
         icon: "✏️",
         text: "其他",
         detail: "如果還有其他擔心，也可以告訴我們。"
+      },
+      {
+        key: "not_yet",
+        icon: "💭",
+        text: "目前還沒想到",
+        detail: "現在還沒有特別想到擔心的事情。"
       }
     ]
   }
@@ -416,7 +422,7 @@ function renderQuestion() {
         id="otherInput"
         class="other-input"
         maxlength="120"
-        placeholder="其他想補充的事情（選填）"
+        placeholder="請填寫至少 1 個字（必填，最多 120 字）"
       >${escapeHtml(otherText)}</textarea>
     `;
   }
@@ -431,6 +437,7 @@ function renderQuestion() {
   if (otherInput) {
     otherInput.addEventListener("input", (event) => {
       otherText = event.target.value;
+      if (otherText.trim()) quizError.textContent = "";
     });
   }
 }
@@ -449,6 +456,14 @@ function selectOption(optionKey) {
       selected.splice(index, 1);
       if (optionKey === "other") otherText = "";
     } else {
+      // Q8「目前還沒想到」與具體擔心事項互斥。
+      if (q.id === "q8" && optionKey === "not_yet") {
+        selected.length = 0;
+        otherText = "";
+      } else if (q.id === "q8") {
+        const notYetIndex = selected.indexOf("not_yet");
+        if (notYetIndex >= 0) selected.splice(notYetIndex, 1);
+      }
       if (selected.length >= q.maxSelect) {
         quizError.textContent = `這題最多選 ${q.maxSelect} 項喔！`;
         return;
@@ -473,6 +488,12 @@ function validateCurrentQuestion() {
 
   if (q.type === "multi" && (!Array.isArray(selected) || selected.length === 0)) {
     quizError.textContent = "至少選 1 項再繼續喔！";
+    return false;
+  }
+
+  if (q.id === "q8" && selected.includes("other") && otherText.trim().length < 1) {
+    quizError.textContent = "選擇「其他」後，請至少填寫 1 個字喔！";
+    document.getElementById("otherInput")?.focus();
     return false;
   }
 
